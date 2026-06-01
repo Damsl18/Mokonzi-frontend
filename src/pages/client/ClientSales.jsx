@@ -39,14 +39,14 @@ const ClientSales = () => {
     const term = search.toLowerCase()
     return (
       (s.product_name || s.product?.name || '').toLowerCase().includes(term) ||
-      (s.worker_name || s.worker?.username || '').toLowerCase().includes(term)
+      (s.worker_username || '').toLowerCase().includes(term)
     )
   })
 
   const totalRevenue = filtered.reduce((sum, s) => sum + parseFloat(s.total_price || s.total || 0), 0)
 
   const selectedProduct = products.find(p => p.id === parseInt(form.product))
-  const unitPrice = selectedProduct ? parseFloat(selectedProduct.current_price || selectedProduct.unit_price || 0) : 0
+  const unitPrice = selectedProduct ? parseFloat(parseFloat(selectedProduct.current_price || selectedProduct.price || 0)) : 0
   const qty = parseInt(form.quantity) || 0
 
   const handleSubmit = async (e) => {
@@ -115,10 +115,10 @@ const ClientSales = () => {
                             <td><strong style={{ color: '#2563eb' }}>{formatCDF(s.total_price || s.total)}</strong></td>
                             <td>
                               <span className="badge-mokonzi badge-neutral">
-                                <i className="bi bi-person me-1" />{s.worker_name || s.worker?.username || '—'}
+                                <i className="bi bi-person me-1" />{s.worker_username || '—'}
                               </span>
                             </td>
-                            <td style={{ fontSize: 12, color: '#64748b' }}>{formatDateTime(s.created_at)}</td>
+                            <td style={{ fontSize: 12, color: '#64748b' }}>{formatDateTime(s.sale_date)}</td>
                           </tr>
                         ))}
                       </tbody>
@@ -156,7 +156,7 @@ const ClientSales = () => {
                   <label className="form-label">Réduction (optionnel)</label>
                   <select className="form-select" value={form.discount} onChange={e => setForm({ ...form, discount: e.target.value })}>
                     <option value="">Aucune</option>
-                    {discounts.map(d => <option key={d.id} value={d.id}>{d.name} — {d.discount_type === 'percentage' ? `${d.value}%` : formatCDF(d.value)}</option>)}
+                    {discounts.map(d => <option key={d.id} value={d.id}>{d.description || `Réduction #${d.id}`} — {d.discount_percentage}%</option>)}
                   </select>
                 </div>
                 {qty > 0 && selectedProduct && (

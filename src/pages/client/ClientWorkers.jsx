@@ -47,7 +47,7 @@ const ClientWorkers = () => {
     e.preventDefault()
     if (!form.username.trim()) { toast.error('Le nom d\'utilisateur est requis.'); return }
     if (!editMode && !form.password.trim()) { toast.error('Le mot de passe est requis.'); return }
-    if (!editMode && form.password.length < 6) { toast.error('Mot de passe minimum 6 caractères.'); return }
+    if (!editMode && form.password.length < 8) { toast.error('Mot de passe minimum 8 caractères.'); return }
     setSubmitting(true)
     try {
       if (editMode) {
@@ -176,7 +176,7 @@ const ClientWorkers = () => {
                   <div className="col-12">
                     <label className="form-label">{editMode ? 'Nouveau mot de passe (laisser vide = inchangé)' : 'Mot de passe *'}</label>
                     <input type="password" name="password" className="form-control" placeholder="••••••••"
-                      value={form.password} onChange={handleChange} required={!editMode} minLength={6} />
+                      value={form.password} onChange={handleChange} required={!editMode} minLength={8} />
                   </div>
                 </div>
                 <div className="d-flex gap-3 mt-4 justify-content-end">

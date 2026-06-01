@@ -23,8 +23,10 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           const me = await getMe()
-          setUser(me)
-          localStorage.setItem('user', JSON.stringify(me))
+          // FIX F11: normaliser pour cohérence avec login()
+          const normalizedMe = { id: me.id, username: me.username, role: me.role }
+          setUser(normalizedMe)
+          localStorage.setItem('user', JSON.stringify(normalizedMe))
         } catch {
           // Token invalide → nettoyage
           setToken(null)

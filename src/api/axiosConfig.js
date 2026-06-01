@@ -1,11 +1,9 @@
 import axios from 'axios'
-
 const api = axios.create({
   baseURL: 'http://localhost:8000/api',
   headers: { 'Content-Type': 'application/json' },
   timeout: 15000,
 })
-
 api.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem('token')
@@ -14,7 +12,6 @@ api.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 )
-
 api.interceptors.response.use(
   (response) => response,
   (error) => {
@@ -26,5 +23,4 @@ api.interceptors.response.use(
     return Promise.reject(error)
   }
 )
-
 export default api

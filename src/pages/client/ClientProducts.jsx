@@ -11,7 +11,7 @@ import { getProducts, createProduct, updateProduct, deleteProduct, setDailyPrice
 import { formatCDF } from '../../utils/formatCurrency'
 import { toast } from 'react-toastify'
 
-const emptyForm = { name: '', description: '', unit_price: '', quantity_in_stock: '' }
+const emptyForm = { name: '', description: '', price: '', quantity_in_stock: '' }
 
 const ClientProducts = () => {
   const [products, setProducts]   = useState([])
@@ -40,18 +40,18 @@ const ClientProducts = () => {
 
   const openAdd = () => { setForm(emptyForm); setEditMode(false); setEditId(null); setShowForm(true) }
   const openEdit = (p) => {
-    setForm({ name: p.name, description: p.description || '', unit_price: p.unit_price, quantity_in_stock: p.quantity_in_stock })
+    setForm({ name: p.name, description: p.description || '', price: p.price, quantity_in_stock: p.quantity_in_stock })
     setEditMode(true); setEditId(p.id); setShowForm(true)
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!form.name.trim()) { toast.error('Le nom est requis.'); return }
-    if (!form.unit_price || parseFloat(form.unit_price) <= 0) { toast.error('Prix invalide.'); return }
+    if (!form.price || parseFloat(form.price) <= 0) { toast.error('Prix invalide.'); return }
     if (!form.quantity_in_stock || parseInt(form.quantity_in_stock) < 0) { toast.error('Quantité invalide.'); return }
     setSubmitting(true)
     try {
-      const payload = { name: form.name.trim(), description: form.description, unit_price: parseFloat(form.unit_price), quantity_in_stock: parseInt(form.quantity_in_stock) }
+      const payload = { name: form.name.trim(), description: form.description, price: parseFloat(form.price), quantity_in_stock: parseInt(form.quantity_in_stock) }
       if (editMode) { await updateProduct(editId, payload); toast.success('Produit mis à jour.') }
       else { await createProduct(payload); toast.success('Produit créé.') }
       setShowForm(false); await load()
@@ -113,7 +113,7 @@ const ClientProducts = () => {
                               <div style={{ fontWeight: 700 }}>{p.name}</div>
                               <div style={{ fontSize: 12, color: '#64748b' }}>{p.description || '—'}</div>
                             </td>
-                            <td>{formatCDF(p.unit_price)}</td>
+                            <td>{formatCDF(p.price)}</td>
                             <td>
                               <strong style={{ color: '#2563eb' }}>{formatCDF(p.current_price || p.unit_price)}</strong>
                             </td>
@@ -132,7 +132,7 @@ const ClientProducts = () => {
                                   <i className="bi bi-pencil" /> Modifier
                                 </button>
                                 <button className="btn-edit-mokonzi" style={{ background: '#f0fdf4', color: '#065f46', borderColor: '#a7f3d0' }}
-                                  onClick={() => { setPriceModal({ open: true, id: p.id, name: p.name, current: p.current_price || p.unit_price }); setNewPrice('') }}>
+                                  onClick={() => { setPriceModal({ open: true, id: p.id, name: p.name, current: p.current_price || p.price }); setNewPrice('') }}>
                                   <i className="bi bi-currency-dollar" /> Prix
                                 </button>
                                 <button className="btn-danger-mokonzi" onClick={() => setDeleteModal({ open: true, id: p.id, name: p.name })}>
@@ -170,8 +170,8 @@ const ClientProducts = () => {
                 <div className="row g-3 mb-4">
                   <div className="col-6">
                     <label className="form-label">Prix de base (CDF) *</label>
-                    <input type="number" name="unit_price" className="form-control" placeholder="15000"
-                      min="0" step="any" value={form.unit_price} onChange={handleChange} required />
+                    <input type="number" name="price" className="form-control" placeholder="15000"
+                      min="0" step="any" value={form.price} onChange={handleChange} required />
                   </div>
                   <div className="col-6">
                     <label className="form-label">Quantité initiale *</label>

@@ -11,9 +11,15 @@ const Navbar = ({ title = 'ETS Mokonzi', lowStockCount = 0 }) => {
   const navigate = useNavigate()
 
   const handleLogout = async () => {
+    const currentRole = user?.role
     await logout()
     toast.info('Vous avez été déconnecté.')
-    navigate('/login-worker')
+    // FIX F14: rediriger vers la bonne page login selon le rôle
+    if (currentRole === 'client' || currentRole === 'super_admin') {
+      navigate('/login-client')
+    } else {
+      navigate('/login-worker')
+    }
   }
 
   return (

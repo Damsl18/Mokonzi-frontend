@@ -111,7 +111,7 @@ const WorkerStock = () => {
                         {products.map(p => (
                           <tr key={p.id}>
                             <td><strong>{p.name}</strong></td>
-                            <td>{formatCDF(p.current_price || p.unit_price)}</td>
+                            <td>{formatCDF(p.current_price || p.price)}</td>
                             <td><strong>{p.quantity_in_stock}</strong></td>
                             <td>
                               {p.quantity_in_stock === 0

@@ -29,16 +29,14 @@ Deux interfaces distinctes : **Worker** (vendeur) et **Client** (administrateur)
 ### Étapes
 
 ```bash
-# 1. Décompresser le zip et entrer dans le dossier
-cd ets-mokonzi-frontend
 
-# 2. Installer les dépendances
+# 1. Installer les dépendances
 npm install
 
-# 3. Démarrer en développement
+# 2. Démarrer en développement
 npm run dev
 
-# 4. Ouvrir dans le navigateur
+# 3. Ouvrir dans le navigateur
 # http://localhost:3000
 ```
 

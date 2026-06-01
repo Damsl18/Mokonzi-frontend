@@ -29,10 +29,16 @@ const WorkerInvoices = () => {
     const load = async () => {
       try {
         const [inv, sal] = await Promise.all([getInvoices(), getSales()])
-        setInvoices(Array.isArray(inv) ? inv : inv.results || [])
+        const invArr = Array.isArray(inv) ? inv : inv.results || []
+        setInvoices(invArr)
         // Ventes sans facture uniquement
         const allSales = Array.isArray(sal) ? sal : sal.results || []
-        setSales(allSales.filter(s => !s.invoice))
+        // FIX F8: exclure les ventes déjà dans une facture
+        const invoicedIds = new Set()
+        invArr.forEach(inv => {
+          if (inv.sales) inv.sales.forEach(s => invoicedIds.add(s.id || s))
+        })
+        setSales(allSales.filter(s => !invoicedIds.has(s.id)))
       } catch { toast.error('Erreur de chargement.') }
       finally { setLoading(false) }
     }

@@ -88,7 +88,7 @@ const ClientReports = () => {
               <>
                 <div className="row g-3 mb-4">
                   {[
-                    { label: 'Total ventes (semaine)', value: formatCDF(weekly.total_sales ?? 0), icon: 'bi-cash-stack', bg: '#d1fae5', color: '#065f46', small: true },
+                    { label: 'Total ventes (semaine)', value: formatCDF(weekly?.total_sales ?? 0), icon: 'bi-cash-stack', bg: '#d1fae5', color: '#065f46', small: true },
                     { label: 'Quantité vendue', value: weekly.total_quantity ?? 0, icon: 'bi-boxes', bg: '#eff6ff', color: '#2563eb' },
                     { label: 'Moyenne journalière', value: formatCDF(weekly.average_daily_sales ?? 0), icon: 'bi-activity', bg: '#fef3c7', color: '#92400e', small: true },
                   ].map((s, i) => (

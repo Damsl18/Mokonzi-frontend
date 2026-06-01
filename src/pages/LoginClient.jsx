@@ -64,7 +64,7 @@ const LoginClient = () => {
                 type="text"
                 name="username"
                 className="form-control"
-                placeholder="client1"
+                placeholder="Nom d'utilisateur"
                 value={form.username}
                 onChange={handleChange}
                 autoComplete="username"

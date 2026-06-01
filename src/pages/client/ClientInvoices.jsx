@@ -106,7 +106,7 @@ const ClientInvoices = () => {
                               <td><strong style={{color:'#2563eb'}}>{formatCDF(inv.total_amount || inv.total)}</strong></td>
                               <td style={{fontSize:13,color:'#64748b'}}>{inv.notes || '—'}</td>
                               <td><span className={`badge-mokonzi badge-${variant}`}>{label}</span></td>
-                              <td style={{fontSize:13}}>{inv.worker_name || inv.created_by?.username || '—'}</td>
+                              <td style={{fontSize:13}}>{inv.worker_name || '—'}</td>
                               <td style={{fontSize:12,color:'#64748b'}}>{formatDateTime(inv.created_at)}</td>
                               <td>
                                 <div className="d-flex gap-2">
